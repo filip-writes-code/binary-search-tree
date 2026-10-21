@@ -18,7 +18,6 @@ class BinaryTree {
     let sortedArray = arrayWithoutDuplicates.sort((a, b) => a - b);
 
     //build a binary tree recursively
-    // [1, 3, 4, 5, 7, 8, 9, 23, 67, 324, 6345]
     const sortedArrToBST = (arr, start, end) => {
       if (start > end) return null;
 
