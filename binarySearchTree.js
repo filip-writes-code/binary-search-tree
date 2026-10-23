@@ -45,6 +45,41 @@ class BinaryTree {
     if (value < node.data) return this.includes(value, node.left);
     if (value > node.data) return this.includes(value, node.right);
   }
+
+  insert(value) {
+    let root = this.root;
+    let newNode = new Node(value);
+
+    // if the tree is empty
+    if (!root) {
+      this.root = newNode;
+      return true;
+    }
+
+    //find the node that will be the parent of the new node
+    let current = root;
+
+    while (current) {
+      if (value < current.data && current.left) {
+        current = current.left;
+      } else if (value > current.data && current.right) {
+        current = current.right;
+      } else if (value === current.data) {
+        return false;
+      } else {
+        break;
+      }
+    }
+
+    //insert the node as a child
+    if (value < current.data) {
+      current.left = newNode;
+    } else {
+      current.right = newNode;
+    }
+
+    return true;
+  }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -59,3 +94,6 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 
 let testArray = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 let test = new BinaryTree(testArray);
+
+test.insert(325);
+prettyPrint(test.root);
