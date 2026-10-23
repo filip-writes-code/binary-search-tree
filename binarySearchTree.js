@@ -113,6 +113,35 @@ class BinaryTree {
 
     return root;
   }
+
+  levelOrderForEach(callback) {
+    //if the callback function is not provided - throw an error
+    if (!callback || typeof callback !== "function")
+      throw new Error("No callback function provided.");
+
+    let q = [];
+    q.push(this.root);
+
+    while (q.length !== 0) {
+      // enqueue discovered nodes
+      let current = q[0];
+      console.log(`Current Node: ${current.data}`);
+      if (current.left) {
+        q.push(current.left);
+        console.log(`Discovered Node on the left: ${current.left.data}`);
+      }
+      if (current.right) {
+        q.push(current.right);
+        console.log(`Discovered Node on the right: ${current.right.data}`);
+      }
+
+      // run the callback function
+      current.data = callback(current.data);
+
+      // and dequeue the top of the queue
+      q.shift();
+    }
+  }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -128,5 +157,4 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 let testArray = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 let test = new BinaryTree(testArray);
 
-test.deleteNode(4);
 prettyPrint(test.root);
