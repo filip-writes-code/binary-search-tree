@@ -80,6 +80,39 @@ class BinaryTree {
 
     return true;
   }
+
+  deleteNode(value, root = this.root) {
+    if (root === null) return root;
+
+    // helper function that gets the In-order Succesor (smallest in the right subtree) of a given node.
+    function getInOrderSuccessor(node) {
+      let current = node.right;
+      while (current.left) {
+        current = current.left;
+      }
+      console.log(
+        `In-order Successor found (smallest in the right subtree of ${node.data}: ${current.data}`,
+      );
+      return current;
+    }
+
+    if (value < root.data) {
+      root.left = this.deleteNode(value, root.left);
+    } else if (value > root.data) {
+      root.right = this.deleteNode(value, root.right);
+    } else if (value === root.data) {
+      // nodes with 0 or 1 children
+      if (root.left === null) return root.right;
+      if (root.right === null) return root.left;
+
+      //nodes with 2 children
+      let successor = getInOrderSuccessor(root);
+      root.data = successor.data;
+      root.right = this.deleteNode(successor.data, root.right);
+    }
+
+    return root;
+  }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -95,5 +128,5 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 let testArray = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 let test = new BinaryTree(testArray);
 
-test.insert(325);
+test.deleteNode(4);
 prettyPrint(test.root);
