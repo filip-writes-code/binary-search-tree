@@ -142,6 +142,22 @@ class BinaryTree {
       q.shift();
     }
   }
+
+  // traverses the tree in in-order depth first manner,
+  // and calls a passed callback function on each element
+  inOrderForEach(callback, root = this.root) {
+    if (!callback || typeof callback !== "function")
+      throw new Error("No callback function provided.");
+
+    if (!root) return;
+
+    console.log(`Working on node: ${root.data}`);
+    root.data = callback(root.data);
+    root.left = this.inOrderForEach(callback, root.left);
+    root.right = this.inOrderForEach(callback, root.right);
+
+    return root;
+  }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
