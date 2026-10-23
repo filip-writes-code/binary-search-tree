@@ -35,6 +35,7 @@ class BinaryTree {
 
   // accepts a value and returns true if the given value is in the tree.
   // If the value isn’t in the tree, it should return false.
+
   includes(value, node = this.root) {
     if (node === null) return false;
     if (node.data === value) return true;
@@ -43,8 +44,6 @@ class BinaryTree {
     //if value is more than the node value, search the right side of the tree
     if (value < node.data) return this.includes(value, node.left);
     if (value > node.data) return this.includes(value, node.right);
-
-    return false;
   }
 }
 
