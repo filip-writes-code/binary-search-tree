@@ -158,6 +158,38 @@ class BinaryTree {
 
     return root;
   }
+
+  // traverses the tree in pre-order depth first manner,
+  // and calls a passed callback function on each element
+  preOrderForEach(callback, root = this.root) {
+    if (!callback || typeof callback !== "function")
+      throw new Error("No callback function provided.");
+
+    if (!root) return;
+
+    root.left = this.preOrderForEach(callback, root.left);
+    console.log(`Working on node: ${root.data}`);
+    root.data = callback(root.data);
+    root.right = this.preOrderForEach(callback, root.right);
+
+    return root;
+  }
+
+  // traverses the tree in post-order depth first manner,
+  // and calls a passed callback function on each element
+  postOrderForEach(callback, root = this.root) {
+    if (!callback || typeof callback !== "function")
+      throw new Error("No callback function provided.");
+
+    if (!root) return;
+
+    root.left = this.postOrderForEach(callback, root.left);
+    root.right = this.postOrderForEach(callback, root.right);
+    console.log(`Working on node: ${root.data}`);
+    root.data = callback(root.data);
+
+    return root;
+  }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -174,3 +206,4 @@ let testArray = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 let test = new BinaryTree(testArray);
 
 prettyPrint(test.root);
+test.postOrderForEach((k) => k * 2);
