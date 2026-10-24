@@ -255,6 +255,23 @@ class BinaryTree {
     if (balance < 0) return false;
     else return true;
   }
+
+  rebalance() {
+    let root = this.root;
+    let entries = [];
+
+    function populateEntries(root) {
+      if (!root) return;
+
+      root.left = populateEntries(root.left);
+      entries.push(root.data);
+      root.right = populateEntries(root.right);
+
+      return;
+    }
+    populateEntries(root);
+    this.root = this.#buildTree(entries);
+  }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -271,3 +288,12 @@ let testArray = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 let test = new BinaryTree(testArray);
 
 prettyPrint(test.root);
+console.log(test.isBalanced());
+test.insert(0);
+test.insert(-2);
+test.insert(-4);
+prettyPrint(test.root);
+console.log(test.isBalanced());
+test.rebalance();
+prettyPrint(test.root);
+console.log(test.isBalanced());
