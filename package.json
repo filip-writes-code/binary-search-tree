@@ -2,6 +2,7 @@
   "name": "binary-search-tree",
   "version": "0.1.0",
   "description": "",
+  "type": "module",
   "homepage": "https://github.com/filip-writes-code/binary-search-tree#readme",
   "bugs": {
     "url": "https://github.com/filip-writes-code/binary-search-tree/issues"

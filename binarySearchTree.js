@@ -6,7 +6,7 @@ class Node {
   }
 }
 
-class BinaryTree {
+export class BinaryTree {
   constructor(inputArray) {
     this.root = this.#buildTree(inputArray);
   }
@@ -135,14 +135,14 @@ class BinaryTree {
     while (q.length !== 0) {
       // enqueue discovered nodes
       let current = q[0];
-      console.log(`Current Node: ${current.data}`);
+      // console.log(`Current Node: ${current.data}`);
       if (current.left) {
         q.push(current.left);
-        console.log(`Discovered Node on the left: ${current.left.data}`);
+        // console.log(`Discovered Node on the left: ${current.left.data}`);
       }
       if (current.right) {
         q.push(current.right);
-        console.log(`Discovered Node on the right: ${current.right.data}`);
+        // console.log(`Discovered Node on the right: ${current.right.data}`);
       }
 
       // run the callback function
@@ -161,7 +161,7 @@ class BinaryTree {
 
     if (!root) return;
 
-    console.log(`Working on node: ${root.data}`);
+    // console.log(`Working on node: ${root.data}`);
     root.data = callback(root.data);
     root.left = this.inOrderForEach(callback, root.left);
     root.right = this.inOrderForEach(callback, root.right);
@@ -178,7 +178,7 @@ class BinaryTree {
     if (!root) return;
 
     root.left = this.preOrderForEach(callback, root.left);
-    console.log(`Working on node: ${root.data}`);
+    // console.log(`Working on node: ${root.data}`);
     root.data = callback(root.data);
     root.right = this.preOrderForEach(callback, root.right);
 
@@ -195,7 +195,7 @@ class BinaryTree {
 
     root.left = this.postOrderForEach(callback, root.left);
     root.right = this.postOrderForEach(callback, root.right);
-    console.log(`Working on node: ${root.data}`);
+    // console.log(`Working on node: ${root.data}`);
     root.data = callback(root.data);
 
     return root;
@@ -272,28 +272,17 @@ class BinaryTree {
     populateEntries(root);
     this.root = this.#buildTree(entries);
   }
-}
 
-const prettyPrint = (node, prefix = "", isLeft = true) => {
-  if (node === null || node === undefined) {
-    return;
+  prettyPrint(node = this.root, prefix = "", isLeft = true) {
+    if (node === null || node === undefined) {
+      return;
+    }
+
+    this.prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
+    console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
+    this.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
   }
-
-  prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
-  console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
-  prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
-};
+}
 
 let testArray = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 let test = new BinaryTree(testArray);
-
-prettyPrint(test.root);
-console.log(test.isBalanced());
-test.insert(0);
-test.insert(-2);
-test.insert(-4);
-prettyPrint(test.root);
-console.log(test.isBalanced());
-test.rebalance();
-prettyPrint(test.root);
-console.log(test.isBalanced());
