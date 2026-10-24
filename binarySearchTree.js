@@ -232,6 +232,29 @@ class BinaryTree {
     }
     if (!isNaN(count)) return count + 1;
   }
+
+  isBalanced() {
+    function checkForBalance(root) {
+      if (!root) return 0;
+
+      let leftHeight = checkForBalance(root.left);
+      if (leftHeight < 0) return -1; //check if the recursive call was unbalanced and return immediately if it was
+      let rightHeight = checkForBalance(root.right);
+      if (rightHeight < 0) return -1; //check if the recursive call was unbalanced and return immediately if it was
+
+      let diff =
+        Math.max(leftHeight, rightHeight) - Math.min(leftHeight, rightHeight);
+
+      if (diff === 0 || diff === 1) {
+        return Math.max(leftHeight, rightHeight) + 1;
+      } else return -1;
+    }
+
+    //convert the output of the recursive function to boolean
+    const balance = checkForBalance(this.root);
+    if (balance < 0) return false;
+    else return true;
+  }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -248,4 +271,3 @@ let testArray = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 let test = new BinaryTree(testArray);
 
 prettyPrint(test.root);
-console.log(test.depth(6345));
