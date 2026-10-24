@@ -146,7 +146,7 @@ export class BinaryTree {
       }
 
       // run the callback function
-      current.data = callback(current.data);
+      callback(current.data);
 
       // and dequeue the top of the queue
       q.shift();
@@ -159,10 +159,10 @@ export class BinaryTree {
     if (!callback || typeof callback !== "function")
       throw new Error("No callback function provided.");
 
-    if (!root) return;
+    if (!root) return null;
 
     // console.log(`Working on node: ${root.data}`);
-    root.data = callback(root.data);
+    callback(root.data);
     root.left = this.inOrderForEach(callback, root.left);
     root.right = this.inOrderForEach(callback, root.right);
 
@@ -175,11 +175,11 @@ export class BinaryTree {
     if (!callback || typeof callback !== "function")
       throw new Error("No callback function provided.");
 
-    if (!root) return;
+    if (!root) return null;
 
     root.left = this.preOrderForEach(callback, root.left);
     // console.log(`Working on node: ${root.data}`);
-    root.data = callback(root.data);
+    callback(root.data);
     root.right = this.preOrderForEach(callback, root.right);
 
     return root;
@@ -191,12 +191,12 @@ export class BinaryTree {
     if (!callback || typeof callback !== "function")
       throw new Error("No callback function provided.");
 
-    if (!root) return;
+    if (!root) return null;
 
     root.left = this.postOrderForEach(callback, root.left);
     root.right = this.postOrderForEach(callback, root.right);
     // console.log(`Working on node: ${root.data}`);
-    root.data = callback(root.data);
+    callback(root.data);
 
     return root;
   }
@@ -283,6 +283,3 @@ export class BinaryTree {
     this.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
   }
 }
-
-let testArray = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
-let test = new BinaryTree(testArray);
