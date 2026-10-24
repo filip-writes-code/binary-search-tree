@@ -219,6 +219,19 @@ class BinaryTree {
 
     return findHeight(findNode);
   }
+
+  depth(value, root = this.root) {
+    let count = 0;
+    if (!root) return;
+    if (root.data === value) return 0;
+
+    if (value < root.data) {
+      count += this.depth(value, root.left);
+    } else if (value > root.data) {
+      count += this.depth(value, root.right);
+    }
+    if (!isNaN(count)) return count + 1;
+  }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -234,6 +247,5 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 let testArray = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 let test = new BinaryTree(testArray);
 
-test.insert(1000);
 prettyPrint(test.root);
-console.log(test.height(7));
+console.log(test.depth(6345));
